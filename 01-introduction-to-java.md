@@ -1,5 +1,8 @@
 # Chapter 1: Introduction to Java
 
+TODO: add the software installation instructions to an initial chapter; taken from
+past Quercus instance.
+
 ## 1.0 Why Learn Java?
 
 This is a course about object-oriented software design, so why not stick with Python,
@@ -51,6 +54,12 @@ you could run `java HelloWorld` in the terminal.
 > Note: If `javac` isn't on your "PATH", then you won't be able to directly run
 > this command without some configuration steps.
 
+TODO: will have to fix package issue / test this out to ensure students can easily
+      try using java and javac directly... probably don't put HelloWorld.java in a
+      package after all? Or also plan to explain packages here? In any case,
+      we'll have to explain packages early on... another place might be with
+      build systems...?
+
 As projects grow in complexity, you may have hundreds of source code files
 that need to be compiled. Directly running `javac` yourself would be tedious,
 so modern development environments like IntelliJ automate this process using
@@ -59,6 +68,17 @@ dependencies, and execution, allowing you to focus on writing code. However,
 understanding the underlying process is important — especially if you plan
 to later take CSC209, where you'll need to compile C programs without the
 help of your IDE.
+
+In IntelliJ, we can run `HelloWorld` by simply clicking the green play button. Try it now!
+Behind the scenes, IntelliJ is taking care of the compilation and execution for us.
+
+> Note: IntelliJ creates and stores "Run Configurations" for us, but we can
+> also customize them ourselves as needed.
+> The file `.idea/runConfigurations/HelloWorld.xml` is what tells IntelliJ
+> what to do when we click play.
+> This is also why the play button appears in this markdown file!
+
+TODO: talk about .class files somewhere around here in more detail, maybe?
 
 ### 1.0.2 Computer Architecture
 
@@ -97,7 +117,7 @@ A **Virtual Machine (VM)** is a software application that simulates a computer.
 It provides a consistent environment for running programs, regardless of the
 underlying OS.
 
-A language like Java uses VMs to achieve **portability**. A program written for a
+A language like Java use a VM to achieve **portability**. A program written for a
 VM can run on _any system that has the appropriate VM installed_.
 
 We can update our computer architecture diagram to include this new layer between
@@ -156,6 +176,8 @@ operating systems (CSC369), compilers (CSC488), and programming languages (CSC32
 
 Now, we can turn our attention to writing Java code!
 
+TODO start a new chapter here, maybe, or put into a separate file + add links between files?
+
 > Note: throughout, we'll show related Python code and highlight similarities
 > and differences between the two languages to help you quickly get up to speed
 > with the syntax of Java so that you'll be writing Java code in no time!
@@ -172,7 +194,8 @@ In Java, no code can exist outside a class, and there are no functions, only met
 So if we want to evaluate and print `7 + 5`, we need to define a class
 and a method to put that code in.
 
-Here is the outline of a class called `Hello`:
+Here is the outline of a class called Hello:
+
 ```java
 class Hello {
     // Methods will go here.
@@ -212,21 +235,23 @@ class Hello {
 }
 ```
 
-This is similar to Python's `if __name__ == '__main__':` block,
-though that takes place *outside* of any classes.
+This main method serves the same purpose as Python's `if __name__ == '__main__':` block.
 
-The keyword `public` determines what code, where, is allowed to call this method.
+The keyword `public` determines what code is allowed to call this method.
 Java's philosophy about sharing vs. hiding a class's data members and methods is
 much more cautious than Python's, and the language has strong mechanisms for
-expressing exactly where a class can be accessed. You'll learn more about this later,
+expressing exactly where a class can be accessed. We'll learn more about this later,
 as well as the meaning of the other parts of the `main` method's signature.
 For now, all we need to know is that this `main` method will be executed
-if we run class `Hello`.
+if we run a given class.
 
 We have to type `public static void main(String[] args)` so often that IntelliJ has
 a shortform for it: `psvm`.
 
 ![psvm completion in IntelliJ](images/psvm.gif)
+
+> Exercise:
+> - [ ] Add a `psvm` to [Hello.java](code/hello_world/Hello.java) so that you can run `Hello`.
 
 ### 1.1.3. Printing things
 In Python, we use a function called `print` to print things.
@@ -247,9 +272,12 @@ including `println`. We pronounce this "print line"; this method puts a newline
 character at the end of whatever you are printing.
 
 The **semicolon** is the next difference from Python.
-In Python, a statement ends when we hit the return key
-(unless we add a backslash to say that we want to continue on the next line).
-In Java, we use a semicolon to mark the end of a statement.
+In Java, we must use a semicolon to mark the end of a statement.
+
+TODO: here we could naturally get into the very basics of testing...
+and motivate build systems more? I.e., rather than print, make a function
+that returns a value so that we can test it... although we maybe need
+the type stuff from the next section?
 
 ## 1.2. Variables and Types
 ### 1.2.1. Flexible Python vs. Strict Java
@@ -268,9 +296,9 @@ Consider this interaction with the Python shell:
 ```
 You may not have noticed how much we are getting away with here.
 We were able to assign a value to variable called `stuff` that
-Python has never heard of until this moment, we could assign to it
-any type of value, and could freely change the kind of value it is given.
-This freedom can be convenient, but it also facilitates writing buggy code
+Python has never heard of until this moment. We could then assign to it
+any type of value, and we could freely change the kind of value it is given.
+This freedom can be convenient, but it also allows us to write buggy code
 if we don't keep careful track of what type of value `stuff` is referring to.
 This is why it is so valuable to define type contracts for your functions
 in Python.
@@ -278,7 +306,7 @@ in Python.
 Java is different. Instead of optional type hints like in Python,
 Java uses a statically typed system where type declarations are
 *required and enforced by the compiler*. This strict type checking ensures
-that we follow type contracts, helping catch many bugs at compile time and
+that we follow type contracts, which helps us catch many bugs at compile time and
 improving overall type safety.
 
 ### 1.2.2. Declaring Types
@@ -344,7 +372,7 @@ Python makes a new variable.
 
 But don't worry, if you forget to declare a variable, IntelliJ will help you out:
 
-![psvm completion in IntelliJ](images/declare.gif)
+![variable declaration error in IntelliJ](images/declare.gif)
 
 #### 1.2.5.2. Assign value of the wrong type
 Here we assign the wrong type of value to a variable:
@@ -359,6 +387,10 @@ Java gives the error: `"Type mismatch: cannot convert from double to int."`
 This could not happen in Python, because variables have no type in Python;
 only objects do.
 
+TODO: add gif for this, or runnable config to see the error message... or just show the error message here?
+TODO: here and possibly earlier, further emphasize compile-time errors;
+      related, decide on whether we are okay with saying imprecise things like "Java gives the error...".
+
 Notice that Java tried to be accommodating by converting `19.6` to the
 type of variable `i`, but it couldn't. This would have caused a loss of information.
 If we instead assigned an `int` value to a `double` variable,
@@ -371,7 +403,7 @@ public static void main(String[] args) {
 ```
 
 #### 1.2.5.3. Declare a variable using a name that already exists
-Here we declare a variable called i, and then do so again.
+Here we declare a variable called `i`, and then do so again.
 
 ```java
 public static void main(String[] args) {
@@ -388,8 +420,8 @@ Python assumes we are referring to the same variable.
 
 ## 1.3. Reference Types and Primitive Types
 ### 1.3.1. More Java types
-So far we've seen one type of variable: `int`. Java has many other types, as does Python.
-Here are some very simple examples to demonstrate some of these.
+So far we've seen one type of variable: `int`. Java has many other types.
+Here are some examples:
 
 ```java
 // We've seen an int before.
@@ -408,6 +440,8 @@ There are additional integer-valued and real-valued types that allow us to
 either save memory (and give up precision) or gain precision
 (at the cost of using more memory). You can read more in the
 [official Java tutorials](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html).
+
+TODO: add an exercise here?
 
 ### 1.3.2. References vs. Primitives
 In Python, every value you can store, even the simplest thing such
@@ -463,7 +497,7 @@ There are three areas in memory:
   We'll learn more about that later.
 
 On the call stack, we have a "stack frame" for the `main` method of class `Simple`,
-which is currently running. In it we have our two variables.
+which is currently running. In it, we have our two variables.
 `age` has the value `21` directly inside it, because `int` is a primitive type.
 `name` does not have `"Jude"` directly inside it. Instead, it stores a reference
 to a `String` object that contains the value `"Jude"`. Since we did not write the
@@ -480,6 +514,8 @@ Programmers often draw an arrow when they want to show that one thing references
 This is great once you are very confident with a language and how references work.
 But in the early stages, you are much more likely to make correct predictions
 if you write down references (you can just make up id values) rather than arrows.
+
+TODO: a simple memory model example... or possibly have them use a plugin...
 
 ## 1.4. Strings
 ### 1.4.1. Class `String`
@@ -500,22 +536,22 @@ so you do not have to explicitly say `new`:
 String s2 = "bye";
 ```
 
-This syntax should remind you of how `str` are declared in Python.
+This syntax should remind you of how `str` objects are declared in Python.
 However, don't let the lack of `new` fool you into thinking `String`
 is a primitive type: it is a reference type.
 
 Strings have various methods available to them. More information on these can
 be found using the Java API here: https://docs.oracle.com/javase/8/docs/api/java/lang/String.html
 
-### 1.4.1.1 String Pool
+### 1.4.1.1 The String Pool
 
 Nevertheless, there is a difference between using the `new` keyword to
 create a `String` variable and not using the `new` keyword.
 Consider the following Python code:
 
 ```
->>> s1 = "Hello"
->>> s2 = "Hello"
+>>> s1 = 'Hello'
+>>> s2 = 'Hello'
 >>> s1 == s2
 True
 ```
@@ -539,6 +575,9 @@ String s1 = new String("Hello");
 String s2 = new String("Hello");
 System.out.println(s1 == s2);
 ```
+
+TODO: this also actually gets at the distinction between == and .equals as well, so might want
+to rework this part more...
 
 We will get `false` as the outcome! The reason is that in this case,
 we have created two _instances_ of the `String` class. Hence, since `s1` and `s2`
@@ -611,6 +650,8 @@ StringBuilder sb = "ban";
 This would have generated the error
 `incompatible types: String cannot be converted to StringBuilder`.
 
+TODO: a string builder exercise?
+
 ### 1.4.5. Single Character Strings: char
 We can have a `String` that contains just one character.
 
@@ -661,7 +702,8 @@ other than the simple one we need to contain a `main` method,
 we have been using classes, such as `String` and `StringBuilder`. 
 Let's look at a few concepts we need in order to confidently write client
 code that uses other classes.
-In the next chapter, we will learn more about defining our own custom classes.
+
+> In the next chapter, we will learn more about defining our own custom classes.
 
 
 ### 1.5.1. Abstractions
@@ -677,10 +719,10 @@ the particular memory addresses don't matter, just that the pointer exists.
 This is an abstraction on the abstraction!
 
 Classes and interfaces are another kind of abstraction.
-When we write a program that manipulates data —
-tax information, students at a university, it could be almost anything —
+When we write a program that manipulates data,
 we need to represent that data in our program.
-For example, a `Student` class would have a name and student number but probably not weight and height.
+For example, a `Student` class in a learning management system might have a name and student number,
+but probably not weight and height.
 Those details are not relevant to the program so we don't need to represent them.
 Class `Student` is an abstraction of a student.
 
@@ -689,21 +731,20 @@ Class `Student` is an abstraction of a student.
 In Python, we can create an instance of a class (in other words: creating an object)
 by calling its constructor. For example, assuming we have a `StringBuilder` class defined in Python:
 ```python
-name = StringBuilder("Viriyakattiyaporn")
+name = StringBuilder("Hello World!")
 ```
 
 The equivalent in Java requires the use of the keyword `new`. For example:
 
 ```java
-StringBuilder name = new StringBuilder("Viriyakattiyaporn");
+StringBuilder name = new StringBuilder("Hello World!");
 ```
 
 In brackets, we provide arguments for the constructor.
 The class may offer more than one constructor, in which case the compiler
 determines which one we are calling by the number and type of the arguments.
 
-When Java evaluates the expression `new StringBuilder("Viriyakattiyaporn")`,
-it:
+When Java evaluates the expression `new StringBuilder("Hello World!")`, it:
 
 - allocates memory for the new object,
 - evaluates the arguments,
@@ -722,7 +763,7 @@ System.out.println(new StringBuilder("Balakrishnan").indexOf("kris"));
 
 Now we have a reference to an object that is an instance of some class.
 What can we do with it? The documentation for the class will tell us.
-If it is a built-in Java class such as `StringBuilder`, we should consult the
+If it is a built-in Java class, such as `StringBuilder`, we should consult the
 [standard Java documentation](https://docs.oracle.com/javase/8/docs/api/) for
 full details on the methods and data members of the class that are available to us.
 Go there now and find the
@@ -735,6 +776,8 @@ The documentation looks something like this:
 
 Within that page, find and review the documentation for the constructor that
 takes a `String`, the `append` method, and the `indexOf` method.
+
+TODO: add in an exercise here?
 
 This documentation specifies exactly how client code can interact with the class,
 in this case class `StringBuilder`. We call this the _Application Programming Interface_ or API.
@@ -797,6 +840,10 @@ int age = 12;
 System.out.println("Age is " + String.valueOf(age));
 ```
 
+TODO: above is where we do **overloading** for the first time; make sure this gets
+emphasized at some point, either here
+or later when we also do overriding in the OOP chapter...
+
 It makes sense to say:
 "Hey `String` class, tell me the `String` value for this integer age".
 It would make less sense to say to a `String` s:
@@ -849,8 +896,7 @@ This can hasten garbage collection and improve performance,
 but it may also be unnecessary and just make your code needlessly messy.
 There is a good discussion of this on
 [StackOverflow](https://stackoverflow.com/questions/449409/does-assigning-objects-to-null-in-java-impact-garbage-collection)
-for anyone interested. 
-
+for anyone interested.
 
 ## 1.6. Arrays
 Arrays are the simplest type that Java provides for storing a collection of items.
@@ -978,7 +1024,7 @@ forHarry = houses[-3]   # The third element from the end of the list
 enemies = houses[1:2]   # Make a copy of some of the elements by "slicing"
 ```
 
-Java arrays do **not** offer slicing and do not permit negative indices.
+Java arrays do **not** offer slicing nor permit negative indices.
 If we try to access an array element at an index that is not between 0 and
 the array's length minus one, we get an error. For example, this code:
 ```java
@@ -994,9 +1040,8 @@ generates the error
 We've seen that arrays are more restricted than Python lists.
 The biggest restriction is that an array's size can never change.
 
-Why, you may ask, does Java have arrays now that we have invented more
-flexible structures such as Python lists? In fact,
-Java does have more flexible structures,
+Why, you may ask, does Java have arrays when more flexible structures such as Python lists exist?
+In fact, Java does have more flexible structures,
 including [ArrayList](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html),
 and we'll learn about these shortly. But it has arrays also, and this is because
 arrays are very efficient. It takes both extra space and extra time in order to
@@ -1024,7 +1069,6 @@ miscellany[1] = new Monster("Fred");
 // Although it has some special syntax, an array is still a kind of Object,
 // so it satisfies the type requirements of our array of Objects too.
 miscellany[2] = new int[50];
-
 ```
 
 So we can put all these different kinds of objects into `miscellany`,
@@ -1063,6 +1107,9 @@ String s = (String) miscellany[1];
 
 This code generates the error
 `java.lang.ClassCastException: Monster cannot be cast to java.lang.String`.
+
+TODO: we talk about casting in a later chapter, so just make sure everything is coherent
+between them.
 
 ### 1.6.6. Two-dimensional arrays
 We can also create arrays with multiple dimensions.
@@ -1109,6 +1156,8 @@ irregular[1] = new int[99];
 irregular[2] = new int[10];
 irregular[1][8] = 170;
 ```
+
+TODO: add some kind of exercise here?
 
 ## 1.7. Aliases
 ### 1.7.1. Aliasing and its implications
@@ -1345,7 +1394,7 @@ if (classSize > 100) {
 
 ```
 
-The round brackets around the condition are **required** in Java!
+Note that the round brackets around the condition are **required** in Java!
 The body itself is enclosed within curly braces.
 However, if the body of the if-statement has just a single line,
 the curly braces are optional. For example:
@@ -1361,17 +1410,17 @@ and fool ourselves into thinking it's inside the if-block:
 ```java
 if (classSize > 500)
     System.out.println("Wow, that's big!");
-    sections = 3;               // These lines are OUTSIDE of the if-block!
-    classSize = classSize / 3;  // They'll ALWAYS run!
+    sections = 3;               // These lines are OUTSIDE of the if-block, so
+    classSize = classSize / 3;  // they'll ALWAYS run!
 ```
 
 But to Java, these extra lines are **OUTSIDE** the if-block.
-They happen regardless of the condition. For this reason, you should always use
-the curly brackets on your code blocks, even when they are not (currently) required.
+They execute regardless of the condition! For this reason, you should always use
+the curly brackets on your code blocks, even when they are not required.
 
 Similar to Python, an if-statement can have a sequence of additional conditions,
-and they can end with an else. The meaning is just as you've seen in Python,
-but notice that we say `else if` rather than `elif`.
+and they can end with an `else`. The meaning is just as you've seen in Python,
+but notice that we write `else if` rather than `elif`.
 
 ```java
 int grade = 86;
@@ -1389,7 +1438,7 @@ if (grade > 80) {
 }
 ```
 
-And of course if-statements can be nested.
+And, of course, if-statements can be nested.
 ```java
 boolean precipitation = true;
 boolean freezing = false;
@@ -1408,10 +1457,12 @@ that associates the else with the inner (vs the outer) if-condition.
 > **Important**: Unlike Python, Java doesn't have `and`, `or`, and `not` operators.
 > The equivalent operators in Java are `&&`, `||`, and `!`, respectively.
 
+TODO: some basic conditionals exercises...
+
 ### 1.8.2. for Loops
 The syntax for a basic for-loop comes from the C language.
-C is now quite old, and this syntax feels as though we are doing things
-quite "by hand".
+C is now quite old, and this syntax feels as though we are doing things "by hand"
+compared to the syntax we are familiar with from Python.
 
 This is the general structure of a basic for-loop:
 ```
@@ -1441,19 +1492,17 @@ System.out.println("Sum of the first " + n + "numbers is " + sum);
 The 3 parts of this for-loop are as follows:
 - `int i = 1` is the *initialization*. Here we initialize a new variable, `i`,
   and give it a starting value of 1.
-- `i <= n` is our *termination*. We loop so long as `i <= n` is `true`,
+- `i <= n` is our *termination*. We loop while `i <= n` is `true`,
   and terminate otherwise.
 - `i++` is our *increment*. This line is equivalent to saying `i += 1`:
   in other words, we increase `i` by 1 at every iteration.
 
 Here we counted from `1` to `n` inclusive
-(as our termination condition was `i <= n`). Notice that the initialization
+(as our termination condition was `i > n`). Notice that the initialization
 included *declaring* the variable `i`. As long as the initialization is one statement,
 it can be anything! It is very common to put the variable declaration in the
 initialization because this limits its scope
 (the part of the code in which we can refer to it) to the loop.
-The variable disappears from our stack frame as soon as the loop is over,
-keeping a nice clean namespace.
 
 Here is an example with an array:
 ```java
@@ -1465,6 +1514,8 @@ for (int i = 0; i < powers.length; i++) {
 
 Notice that we count from `0` to `powers.length - 1`:
 this is all the valid indices of the array!
+
+TODO: add an exercise here?
 
 #### 1.8.2.1. Enhanced for-loops
 Java also provides an enhanced form of for-loop, which is more like what you're
@@ -1583,6 +1634,10 @@ while (A[i++] < 7);
 
 This kind of code may seem unfamiliar or be confusing,
 so usage of this form is not recommended. The information is just for reference.
+
+TODO: this feels like quite a distinct break point, so perhaps we make this a new file below?
+      Should also think about this for above parts to see where we can split things up to feel
+      more manageable for students...
 
 ## 1.9. Parameters
 
@@ -1787,3 +1842,8 @@ The situation gets trickier when we have objects that contain other objects.
 The bottom line is this: know whether you are passing a primitive or a reference
 type and whether your objects are mutable — at each level of their structure.
 Memory model diagrams offer a concise visual way to represent that.
+
+TODO: some kind of exercises to verify understanding of the memory model?
+
+TODO: some exercises that involve everything from the above...
+      we can maybe also have some similar exercises that are only available through MarkUs?
